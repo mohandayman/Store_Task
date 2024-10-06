@@ -1,0 +1,70 @@
+﻿@using BL.Dtos.Device;
+@using BL.Dtos.Property;
+
+@model DeviceRenderDto
+<div class="formbold-main-wrapper">
+    <div class="formbold-form-wrapper">
+
+        <img src="@ViewBag.CatImgUrl">
+
+        <form asp-action="Edit" method="POST">
+
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="formbold-form-title">
+                <h2 class="">Update @ViewBag.CatName</h2>
+
+            </div>
+
+            <div class="formbold-input-flex">
+                <label class="formbold-form-label">
+                    Device Name
+                </label>
+                <input type="text"
+                       asp-for="@Model.Name"
+                       id="firstname"
+                       class="formbold-form-input" />
+            </div>
+            <div class="formbold-input-flex">
+                <label class="formbold-form-label">
+                    Acquisition Date
+                </label>
+                <input type="date"
+                       asp-for="@Model.Acquisition_Date"
+                       id="firstname"
+                       class="formbold-form-input" />
+            </div>
+            <div class="formbold-input-flex">
+
+                @foreach (var Prop in Model.Category_Details.Properties)
+                {                
+
+                    <div>
+
+                        <label class="formbold-form-label">
+                            @Prop.Description
+                        </label>
+                        <input type="text"
+                               asp-for="@Prop.Value"
+                               id="firstname"
+                               class="formbold-form-input" />
+                        <input type="hidden" asp-for="@Prop.Id" value="@Prop.Id" />
+
+                    </div>
+
+                }
+            </div>
+
+
+
+            <button class="formbold-btn">
+                Submit
+            </button>
+
+
+
+
+
+        </form>
+    </div>
+</div>

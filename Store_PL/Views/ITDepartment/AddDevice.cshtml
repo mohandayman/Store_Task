@@ -1,0 +1,82 @@
+﻿@using BL.Dtos.Device;
+@using BL.Dtos.Property;
+
+@model DeviceCommandDto 
+<div class="formbold-main-wrapper">
+  <div class="formbold-form-wrapper">
+
+        <img src="@ViewBag.CatImgUrl">
+
+    <form  method="POST">
+            <input type="hidden" asp-for="@Model.Category_Id"
+                   value="@ViewBag.CategoryId" />
+
+      <div class="formbold-form-title">
+        <h2 class="">New @ViewBag.CatName</h2>
+     
+      </div>
+
+      <div class="formbold-input-flex">
+                <label class="formbold-form-label">
+                    Device Name
+                </label>
+                <input type="text"
+                       asp-for="@Model.Name"
+                       id="firstname"
+                       class="formbold-form-input" />
+        </div>
+        <div class="formbold-input-flex">
+                <label class="formbold-form-label">
+                    Acquisition Date
+                </label>
+                <input type="date"
+                       asp-for="@Model.Acquisition_Date"
+                       id="firstname"
+                       class="formbold-form-input" />
+        </div>
+      <div class="formbold-input-flex">
+
+                @for (int i = 0; i < ViewBag.device_props.Count; i++)
+                {
+                    var prop = ViewBag.device_props[i];
+
+                    // Create a new PropertyDeviceValueCommand and add it to the list
+                    Model.propertyDeviceValueCommands.Add(new PropertyDeviceValueCommand()
+                {
+                    Property_Id = prop.Id
+                });
+
+                    <div>
+
+                 <label class="formbold-form-label">
+                        @prop.Description
+                        </label>
+                        <input
+                        type="text"
+                        name="propertyDeviceValueCommands[@i].Property_Value"
+                        id="firstname"
+                        class="formbold-form-input"
+                       />
+                    <input type="hidden" name="propertyDeviceValueCommands[@i].Property_Id" value="@prop.Id" />
+
+                </div>
+                   
+                }
+
+              
+
+</div>
+
+
+           
+                <button class="formbold-btn">
+                    Submit
+                </button>
+            
+
+            
+          
+
+    </form>
+  </div>
+</div>
