@@ -136,6 +136,7 @@ namespace BL.Services
 
                 var Device = new Device()
                 {
+                    Id= Id,
                     Name = deviceCommandDto.Name,
                     Acquisition_Date = deviceCommandDto.Acquisition_Date,
                     Category_Id = deviceCommandDto.Category_Id,
@@ -150,7 +151,7 @@ namespace BL.Services
 
                 };
 
-                var result = await deviceRepo.UpdateAsync(Id, Device);
+                var result = await deviceRepo.UpdateDevice( Device);
                 if (result.IsSuccess)
                 {
                     transaction.Commit();

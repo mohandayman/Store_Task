@@ -1,70 +1,36 @@
 ﻿@using BL.Dtos.Device;
-@using BL.Dtos.Property;
-
 @model DeviceRenderDto
-<div class="formbold-main-wrapper">
-    <div class="formbold-form-wrapper">
 
-        <img src="@ViewBag.CatImgUrl">
+<form asp-action="Edit" method="POST">
+    <!-- Hidden field for the Device Id -->
+    <input type="hidden" name="Id" value="@Model.Id" />
 
-        <form asp-action="Edit" method="POST">
-
-            <input type="hidden" name="Id" value="@Model.Id" />
-
-            <div class="formbold-form-title">
-                <h2 class="">Update @ViewBag.CatName</h2>
-
-            </div>
-
-            <div class="formbold-input-flex">
-                <label class="formbold-form-label">
-                    Device Name
-                </label>
-                <input type="text"
-                       asp-for="@Model.Name"
-                       id="firstname"
-                       class="formbold-form-input" />
-            </div>
-            <div class="formbold-input-flex">
-                <label class="formbold-form-label">
-                    Acquisition Date
-                </label>
-                <input type="date"
-                       asp-for="@Model.Acquisition_Date"
-                       id="firstname"
-                       class="formbold-form-input" />
-            </div>
-            <div class="formbold-input-flex">
-
-                @foreach (var Prop in Model.Category_Details.Properties)
-                {                
-
-                    <div>
-
-                        <label class="formbold-form-label">
-                            @Prop.Description
-                        </label>
-                        <input type="text"
-                               asp-for="@Prop.Value"
-                               id="firstname"
-                               class="formbold-form-input" />
-                        <input type="hidden" asp-for="@Prop.Id" value="@Prop.Id" />
-
-                    </div>
-
-                }
-            </div>
-
-
-
-            <button class="formbold-btn">
-                Submit
-            </button>
-
-
-
-
-
-        </form>
+    <!-- Field for the Device Name -->
+    <div>
+        <label>Device Name</label>
+        <input type="text" name="Name" value="@Model.Name" />
     </div>
-</div>
+
+    <!-- Field for Acquisition Date -->
+    <div>
+        <label>Acquisition Date</label>
+        <input type="date" name="Acquisition_Date" value="@Model.Acquisition_Date.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <!-- Hidden fields for Category Details -->
+    <input type="hidden" name="Category_Details.Id" value="@Model.Category_Details.Id" />
+    <input type="hidden" name="Category_Details.Name" value="@Model.Category_Details.Name" />
+
+    <!-- Looping through Properties of the Category -->
+    @for (int i = 0; i < Model.Category_Details.Properties.Count; i++)
+    {
+        <div>
+            <label>@Model.Category_Details.Properties[i].Description</label>
+            <input type="text" name="Category_Details.Properties[@i].Value" value="@Model.Category_Details.Properties[i].Value" />
+            <input type="hidden" name="Category_Details.Properties[@i].Id" value="@Model.Category_Details.Properties[i].Id" />
+        </div>
+    }
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+</form>

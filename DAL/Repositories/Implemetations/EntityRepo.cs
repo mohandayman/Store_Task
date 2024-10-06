@@ -61,8 +61,9 @@ namespace DAL.Repositories.Implemetations
                 return Result.Failure("Entity not found.");
             }
 
-          
+
             dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+
 
             try
             {
